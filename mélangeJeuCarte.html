@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>Jeu de carte</title>
+    </head>
+	
+	<style>
+	
+		input {
+			width: 15px;
+			height: 15px;
+		}
+	
+	</style>
+    
+<body>
+    
+    <p>Créer un programme qui mélange le jeu de carte créé à partir de la fonction !</p>
+    
+    <script>
+    
+	
+		/*
+		* Retourne un nouveau tableau valant
+		* T amputé de la case i
+		*/
+		function SupprimerCase(T,i){
+			let Tres = [];		
+			let cptTres = 0;
+			let cptT	= 0;
+			
+			while(cptTres < (T.length - 1) ){
+			
+				if( cptTres == i ){ 
+					cptT = cptT + 1;
+				}
+				
+				Tres[cptTres] 	= T[cptT];
+				cptTres = cptTres + 1 ;
+				cptT	= cptT + 1;
+			}
+			
+			return Tres;
+		}
+		
+		/*
+		* retourne "true" si t est un sous-tableau de T
+		*/
+		function DetecteSoustableau(T,t){
+		
+			let cptT = 0;
+			while(cptT < T.length){
+				
+				let cptt = 0;
+				while (cptt < t.length){
+					
+					if(T[cptT + cptt] == t[cptt]){
+					
+					}else{
+						break;
+					}			
+					if(cptt == (t.length-1) ){
+						return true;
+					}	
+					cptt = cptt + 1;
+				}
+				cptT = cptT + 1; //cptT ++ ou cptT += 1
+			}
+			
+			return false;
+		}
+	
+		
+	
+		/*
+		* Retourne un tableau contenant les
+		* cases de T
+		*/
+		function CopierTableau(T){
+			let Tres = [];
+			for(let cpt = 0; cpt < T.length; cpt = cpt + 1){
+				Tres[cpt] = T[cpt];
+			}
+			return Tres;
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+		/*
+		* paquet : le paquet créé avec la fontion en dessous
+		* -> retourne un nouveau tableau correspondant au mélange
+		*/
+		function Melange(paquet){
+		
+		}
+	
+		/*
+		* forcément 52 cartes
+		* -> retourne un tableau de cartes
+		*/
+		function CreerJeuDeCarte() {
+
+			const couleur 	= [`Trefle`, `Coeur`,`Pique`,`Carreau`];
+			const numero 	= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, `V`, `D`, `R`];
+			let jeuCarte 	= new Array(52);
+			let cpt 		= 0;
+			let cptCouleur 	= 0;
+
+			for (let i=0; i<jeuCarte.length;i++) {
+
+				if(i!=0 && i%13==0) {
+					cptCouleur=cptCouleur+1;
+				}
+
+				jeuCarte[i] = {
+					couleur : couleur[cptCouleur],
+					numero 	: numero [i%13],
+				}
+			}
+			return jeuCarte;
+		}
+	
+		/*
+		* face : nombre de face du dés à lancer, minimum 2
+		*/
+		function LancerDes(face){
+			return Math.round(Math.random()*(face-1)+1);
+		}
+        
+		
+		
+		
+		
+		
+		let grille = [
+            [1,2,3,  4,5,6,  7,8,9],
+            [7,8,9,  1,2,3,  4,5,6],
+            [4,5,6,  7,8,9,  1,2,3],
+            
+            [2,3,4,  5,6,7,  8,9,1],
+            [8,9,1,  2,3,4,  5,6,7],
+            [5,6,7,  8,9,1,  2,3,4],
+            
+            [3,4,5,  6,7,8,  9,1,2],
+            [9,1,2,  3,4,5,  6,7,8],
+            [6,7,8,  9,1,2,  3,4,5]
+            ];
+			
+		let grille1caseVide = [
+            [1,2,3,  4,5,6,  7,8,9],
+            [7,8,9,  1,2,3,  4,5,6],
+            [4,5,6,  7,8,9,  1,2,3],
+            
+            [2,3,4,  5,6,7,  8,9,1],
+            [8,9,1,  2,3,4,  5,6,7],
+            [5,6,7,  8,9,1,  2,3,4],
+            
+            [3,4,5,  6,7,8,  9,1,2],
+            [9,1,2,  3,4,5,  6,7,],
+            [6,7,8,  9,1,2,  3,4,5]
+            ];
+		
+		/*
+		* 
+		* Ecrire la fonction qui va vérifier que la grille de sudoku est bien remplie
+		*
+		*/
+		function VerifieCorrection(grille){
+			
+				if(	VerifieLignes(grille) 	&&  
+					VerifieColonnes(grille) && 
+					VerifieCarres(grille) ){
+					
+					return true;
+				}
+					
+				return false;
+		}
+		
+		//retourne vrai ou faux
+		function VerifieColonnes(grille){
+			for(let i = 0; i < grille.length ; i++){
+				// verifie tableau avec les 9 i-ème case de chaque ligne
+				let col = [];
+				for(let j = 0; j < 9; j++){
+					col.push(grille[j][i]);
+				}
+				if(VerifieTableau(col) == false){
+					return false;
+				}
+			}
+			return true;
+		}
+
+		//retourne vrai ou faux
+        function VerifieLignes(grille){
+            
+            for(let i = 0; i < grille.length ; i++){
+                if( VerifieTableau(grille[i]) == false){
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+		
+		function VerifieTableau(tableau){
+            // 9 éléments
+            if(tableau.length != 9){
+                return false
+            }
+            
+            //entre 1 et 9
+            for(let i = 0; i < 9; i++){
+                if( ! ((tableau[i]>= 1) && (tableau[i]<= 9)) ){
+                    return false;
+                }
+            }
+            
+            //pas de doublon
+            for(let i = 0; i < 9; i++){
+                // la case i n'est pas égal aux case à partir de i + 1
+                for(let j = i + 1; j < tableau.length; j++){
+                    if( tableau[i] == tableau[j] ){
+                        return false;
+                    }
+                }
+            }
+            
+            return true;
+        }
+
+		function VerifieCarres(grille){
+		
+			
+			//première ligne
+            for(let i = 0; i < 3 ; i++){
+                 
+                 let carre = [];
+              
+                 carre.push(grille[0][0+3*i]);
+                 carre.push(grille[0][1+3*i]);
+                 carre.push(grille[0][2+3*i]);
+				 
+                 carre.push(grille[1][0+3*i]);
+                 carre.push(grille[1][1+3*i]);
+                 carre.push(grille[1][2+3*i]);
+                 
+                 carre.push(grille[2][0+3*i]);
+                 carre.push(grille[2][1+3*i]);
+                 carre.push(grille[2][2+3*i]);
+                 
+                if(VerifieTableau(carre) == false){
+                    return false;
+                }
+               
+            }
+            return true;
+        }
+		
+		function CreerInput(){
+			let input;
+			let div;
+			for(let i = 0; i < 9; i++){
+				
+				div = document.createElement("DIV");
+				document.body.appendChild(div);
+				
+				//dedans balancer 9 input
+				for(let j = 0; j < 9; j++){
+				
+					input = document.createElement("input");
+					div.appendChild(input);
+				}
+			}
+			
+			
+		}
+		
+		/*
+		
+		numéro 4,4 
+		*/
+		function Resout1caseVide(grille){
+		
+			let tabNumero = TrouveNumeroCaseVide(grille);
+			
+			for(let i = 1; i < 10;){
+				grille[tabNumero[0]][tabNumero[1]] = i;		
+				if ( VerifieCorrection(grille) == true ){
+					return i;
+				}
+				i++;
+			}
+			return "Erreur aucun bon chiffre trouvé";
+		}
+		
+		function TrouveNumeroCaseVide(grille){
+			for(let i = 0; i < 9; i++){
+				for(let j = 0; j < 9; j++){
+					if(grille[i][j] == undefined){
+						let tab = []
+						tab.push(i);
+						tab.push(j);
+						return tab;
+					}
+				}
+			}
+		}
+		
+		
+		/*
+		
+		//n = nombre de cases vide
+		
+		RésoudreSudoku(grille, n){
+			
+			si n est égal à 1 ?
+				-> on sait la trouver
+			
+			hypothèse sur une case vide ? Subtilité ...
+			
+			grilleH <- grille de l'entrée avec une case remplie en plus
+			
+			RésoudreSudoku(grilleH, n-1)
+		
+		}
+		
+		*/
+		
+		/*
+			//la grille est celle du document 
+			
+			CreerLaPremiereLigneDeLaGrille()
+			
+				let ligne1 = [];
+				
+				ligne1.push(document.getElementById("input00").value);
+				ligne1.push(document.getElementById("input01").value);
+				ligne1.push(document.getElementById("input02").value);
+				ligne1.push(document.getElementById("input03").value);
+				ligne1.push(document.getElementById("input04").value);
+				ligne1.push(document.getElementById("input05").value);	
+				ligne1.push(document.getElementById("input06").value);
+				ligne1.push(document.getElementById("input07").value);
+				ligne1.push(document.getElementById("input08").value);
+				
+				i = 0;
+				boucle 60 fois avec i
+					ligne1.push(document.getElementById("input0"+ i ).value);
+					i++
+				
+				return ligne1;
+		*/
+		
+
+		
+    </script>
+	
+</body>
+</html>
