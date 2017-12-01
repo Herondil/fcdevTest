@@ -44,32 +44,6 @@
 			return Tres;
 		}
 		
-		/*
-		* retourne "true" si t est un sous-tableau de T
-		*/
-		function DetecteSoustableau(T,t){
-		
-			let cptT = 0;
-			while(cptT < T.length){
-				
-				let cptt = 0;
-				while (cptt < t.length){
-					
-					if(T[cptT + cptt] == t[cptt]){
-					
-					}else{
-						break;
-					}			
-					if(cptt == (t.length-1) ){
-						return true;
-					}	
-					cptt = cptt + 1;
-				}
-				cptT = cptT + 1; //cptT ++ ou cptT += 1
-			}
-			
-			return false;
-		}
 	
 		
 	
